@@ -14,9 +14,9 @@ jobs:
             - name: login and update EC2 instance
               uses: appleboy/ssh-action@v1.0.3
               with: 
-                  host: ${{ secret.EC2_HOST }}
-                  username: ${{ secret.EC2_USERNAME }}
-                  key: ${{ secret.EC2_SSH_KEY }}
+                  host: ${{ secrets.EC2_HOST }}
+                  username: ${{ secrets.EC2_USERNAME }}
+                  key: ${{ secrets.EC2_SSH_KEY }}
                   port: 22
                   script: |
                       whoami
