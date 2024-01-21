@@ -1,1 +1,29 @@
+name: Deploy to EC2
+on:
+    push:
+        branches:
+            - main
 
+    pull_request:
+        branches:
+            - main
+    schedule: 
+        - cron: '0 0 * * *' 
+    release: 
+        types:
+            - published
+            - created
+            - prereleased
+          
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Print my name
+              run: | 
+                  echo "Kaveri"
+                  echo "GitHub"
+
+            - name: Current folder
+              run: |
+                  pwd
