@@ -4,26 +4,41 @@ on:
         branches:
             - main
 
-    pull_request:
-        branches:
-            - main
-    schedule: 
-        - cron: '0 0 * * *' 
-    release: 
-        types:
-            - published
-            - created
-            - prereleased
+    #pull_request:
+        #branches:
+            #- main
+    #schedule: 
+        #- cron: '0 0 * * *' 
+    #release: 
+        #types:
+            #- published
+            #- created
+            #- prereleased
           
 jobs:
     deploy:
         runs-on: ubuntu-latest
         steps:
-            - name: Print my name
-              run: | 
-                  echo "Kaveri"
-                  echo "GitHub"
+            - name: checking out code on runner
+              uses: actions/checkout@v4
 
-            - name: Current folder
-              run: |
-                  pwd
+            - name: login and update EC2 instance
+              uses: appleboy/ssh-action@v1.0.3
+              with: 
+                  host: ${{ secret.EC2_HOST }}
+                  username: ${{ secret.EC2_USERNAME }}
+                  key: ${{ secret.EC2_SSH_KEY }}
+                  port: 22
+                  script: |
+                      whoami
+                      pwd
+                      sudo apt-get update -y
+                      
+            #- name: Print my name
+              #run: | 
+                  #echo "Kaveri"
+                  #echo "GitHub"
+
+            #- name: Current folder
+              #run: |
+                  #pwd
