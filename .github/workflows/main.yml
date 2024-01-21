@@ -26,4 +26,25 @@ jobs:
                       sudo mkdir -p /var/www/html
                       sudo chown -R ${{ secrets.EC2_USERNAME }} /var/www/html
                       sudo chmod -R 755 /var/www/html
+            - name: copy file via ssh password
+              uses: appleboy/scp-action@v0.1.7
+              with:
+                host: ${{ secrets.EC2_HOST }}
+                username: ${{ secrets.EC2_USERNAME }}
+                key: ${{ secrets.EC2_SSH_KEY }}
+                port: 22
+                source: ./
+                target: /var/www/html
+            - name: restart nginx
+              uses: appleboy/ssh-action@v1.0.3
+              with: 
+                  host: ${{ secrets.EC2_HOST }}
+                  username: ${{ secrets.EC2_USERNAME }}
+                  key: ${{ secrets.EC2_SSH_KEY }}
+                  port: 22
+                  script: |
+                      whoami
+                      pwd
+                      sudo systemctl restart nginx
+                      
                       
